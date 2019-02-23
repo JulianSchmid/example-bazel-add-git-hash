@@ -5,8 +5,8 @@ def main():
     print("STABLE_GIT_HASH {}".format(get_git_hash(".")))
 
     git_status_path = os.path.normpath(os.path.join(__file__, "..", ".git_status"))
-    with open(os.path.join(git_status_path, "commit_hash")) as f:
-        f.write(git_hash);
+    with open(os.path.join(git_status_path, "commit_hash"), "w") as f:
+        f.write(git_hash)
 
 def get_git_hash(path):
     p = subprocess.Popen(["git", "rev-parse", "HEAD"], cwd=path, stdout=subprocess.PIPE)

@@ -3,3 +3,4 @@ bazel-genfiles
 bazel-githash
 bazel-out
 bazel-testlogs
+.git_status/*

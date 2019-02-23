@@ -11,12 +11,15 @@ def main():
                         help='output source file')
     # parser.add_argument('git_hash', 
     #                     help='the git hash')
-    parser.add_argument('stamp_file', 
-                         help='the stamp file')
+    parser.add_argument('commit_status_file', 
+                         help='file containing the current commit hash')
     
     args = parser.parse_args()
 
-    h = args.git_hash
+    h = None
+    with open(args.commit_status_file, "r") as f:
+        h = f.read()
+    
     print("Generating {}".format(args.header))
     with open(args.header, "w") as f:
         f.write("""

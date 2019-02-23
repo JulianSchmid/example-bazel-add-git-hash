@@ -7,6 +7,7 @@ py_binary(
 
 git_hash_cpp(
     name = "foo",
+    git_status_commit = ".git_status/commit_hash",
     header = "b.h",
     cpp = "b.cpp"
 )
