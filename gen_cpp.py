@@ -11,15 +11,21 @@ def main():
                         help='output source file')
     # parser.add_argument('git_hash', 
     #                     help='the git hash')
-    parser.add_argument('commit_status_file', 
+    parser.add_argument('commit_hash_file', 
+                         help='file containing the current commit hash')
+    parser.add_argument('workspace_dirty_file', 
                          help='file containing the current commit hash')
     
     args = parser.parse_args()
 
     h = None
-    with open(args.commit_status_file, "r") as f:
+    with open(args.commit_hash_file, "r") as f:
         h = f.read()
-    
+
+    is_dirty = False
+    with open(args.workspace_dirty_file, "r") as f:
+        is_dirty = f.read().strip() != "0"
+
     print("Generating {}".format(args.header))
     with open(args.header, "w") as f:
         f.write("""
@@ -27,6 +33,7 @@ def main():
 
 struct VersionInfo {{
     static char git_hash[{0}];
+    static bool git_is_workspace_dirty;
 }};
 """.format(len(h)));
 
@@ -47,10 +54,12 @@ struct VersionInfo {{
 #include "{2}"
 
 char VersionInfo::git_hash[{0}] = {{ {1} }};
+bool VersionInfo::git_is_workspace_dirty = {3};
 """.format(
                 len(h),
                 hash_array,
-                args.header
+                args.header,
+                "true" if is_dirty else "false"
             )
         )
 

@@ -8,11 +8,11 @@ and users cannot redefine it.
 
 def _impl(ctx):
     # The list of arguments we pass to the script.
-    args = ["--header", ctx.outputs.header.path] + ["--source", ctx.outputs.cpp.path] + [ctx.file.git_status_commit.path]
+    args = ["--header", ctx.outputs.header.path] + ["--source", ctx.outputs.cpp.path] + [ctx.file.git_status_commit.path, ctx.file.git_workspace_dirty.path]
 
     # Action to call the script.
     ctx.actions.run(
-        inputs = [ctx.file.git_status_commit],
+        inputs = [ctx.file.git_status_commit, ctx.file.git_workspace_dirty],
         outputs = [ctx.outputs.header, ctx.outputs.cpp],
         arguments = args,
         progress_message = "Adding Git Hash to %s" % ctx.outputs.header.short_path,
@@ -29,6 +29,9 @@ git_hash_cpp = rule(
             default = Label("//:gen_cpp"),
         ),
         "git_status_commit": attr.label(
+            allow_single_file = True,
+        ),
+        "git_workspace_dirty": attr.label(
             allow_single_file = True,
         ),
         "header": attr.output(mandatory = True),
