@@ -1,0 +1,1 @@
+build --workspace_status_command "python workspace_status.py"

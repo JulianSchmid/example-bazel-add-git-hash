@@ -1,0 +1,5 @@
+bazel-bin
+bazel-genfiles
+bazel-githash
+bazel-out
+bazel-testlogs
