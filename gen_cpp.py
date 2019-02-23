@@ -9,8 +9,11 @@ def main():
     parser.add_argument('--source',
                         required=True,
                         help='output source file')
-    parser.add_argument('git_hash', 
-                        help='the git hash')
+    # parser.add_argument('git_hash', 
+    #                     help='the git hash')
+    parser.add_argument('stamp_file', 
+                         help='the stamp file')
+    
     args = parser.parse_args()
 
     h = args.git_hash

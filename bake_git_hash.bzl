@@ -35,5 +35,5 @@ git_hash_cpp = rule(
     #    "a.h": "a.h",
     #    "a.cpp": "a.cpp",
     #},
-    output_to_genfiles = True,
+    #output_to_genfiles = True,
 )
