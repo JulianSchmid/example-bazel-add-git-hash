@@ -10,9 +10,7 @@ def _impl(ctx):
     # The list of arguments we pass to the script.
     # volatile status file: ctx.version_file
     # stable status file: ctx.info_file
-    print(ctx.attr.commit_variable_name)
-    print(ctx.attr.dirty_variable_name)
-    args = ["--header", ctx.outputs.header.path] + ["--source", ctx.outputs.cpp.path] + ["--volatile_file", ctx.version_file.path, "--stable_file", ctx.info_file.path, "--commit_hash_name", "GIT_COMMIT_HASH", "--workspace_dirty_name", ""]
+    args = ["--header", ctx.outputs.header.path] + ["--source", ctx.outputs.cpp.path] + ["--volatile_file", ctx.version_file.path, "--stable_file", ctx.info_file.path, "--commit_hash_name", ctx.attr.commit_variable_name, "--workspace_dirty_name", ctx.attr.dirty_variable_name]
 
     # Action to call the script.
     ctx.actions.run(
