@@ -8,8 +8,8 @@ def main():
     if git_is_dirty:
         git_is_dirty_str = "1"
 
-    print("GIT_COMMIT_HASH {}".format(git_hash))
-    print("GIT_DIRTY {}".format(git_is_dirty_str))
+    print("STABLE_GIT_COMMIT_HASH {}".format(git_hash))
+    print("STABLE_GIT_DIRTY {}".format(git_is_dirty_str))
 
     #git_status_path = os.path.normpath(os.path.join(__file__, "..", ".git_status"))
     #with open(os.path.join(git_status_path, "commit_hash"), "w") as f:
