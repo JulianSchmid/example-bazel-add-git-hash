@@ -10,7 +10,9 @@ def _impl(ctx):
     # The list of arguments we pass to the script.
     # volatile status file: ctx.version_file
     # stable status file: ctx.info_file
-    args = ["--header", ctx.outputs.header.path] + ["--source", ctx.outputs.cpp.path] + ["--volatile_file", ctx.version_file.path, "--stable_file", ctx.info_file.path, "GIT_COMMIT_HASH"]
+    print(ctx.attr.commit_variable_name)
+    print(ctx.attr.dirty_variable_name)
+    args = ["--header", ctx.outputs.header.path] + ["--source", ctx.outputs.cpp.path] + ["--volatile_file", ctx.version_file.path, "--stable_file", ctx.info_file.path, "--commit_hash_name", "GIT_COMMIT_HASH", "--workspace_dirty_name", ""]
 
     # Action to call the script.
     ctx.actions.run(
@@ -30,7 +32,8 @@ git_hash_cpp = rule(
             allow_files = True,
             default = Label("//:gen_cpp"),
         ),
-
+        "commit_variable_name": attr.string(mandatory=True),
+        "dirty_variable_name": attr.string(mandatory=True),
         "header": attr.output(mandatory = True),
         "cpp": attr.output(mandatory = True)
     },
