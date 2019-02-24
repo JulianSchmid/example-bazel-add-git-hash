@@ -1,5 +1,19 @@
 import argparse, sys, os
 
+def read_values(path):
+    result = {}
+    with open(path, "r") as f:
+        for entry in f.read().split("\n"):
+            if entry:
+                key_value = entry.split(' ', 1)
+                key = key_value[0].strip()
+                if key in result:
+                    sys.stderr.write("Error: Duplicate key '{}'\n".format(key))
+                    sys.exit(1)
+                else:
+                    result[key] = key_value[1].strip()
+    return result
+
 def main():
 
     parser = argparse.ArgumentParser(description='Bake a git hash into a header & source.')
@@ -11,20 +25,23 @@ def main():
                         help='output source file')
     # parser.add_argument('git_hash', 
     #                     help='the git hash')
-    parser.add_argument('commit_hash_file', 
+    parser.add_argument('--version_file',
+                         required=True,
                          help='file containing the current commit hash')
-    parser.add_argument('workspace_dirty_file', 
-                         help='file containing the current commit hash')
+    parser.add_argument('commit_hash_name',
+                         help='name of the hash')
     
     args = parser.parse_args()
 
-    h = None
-    with open(args.commit_hash_file, "r") as f:
-        h = f.read()
+    stable_values = read_values(args.version_file)
+    h = stable_values[args.commit_hash_name.strip()]
+
+    #with open(args.commit_hash_file, "r") as f:
+    #    h = f.read()
 
     is_dirty = False
-    with open(args.workspace_dirty_file, "r") as f:
-        is_dirty = f.read().strip() != "0"
+    #with open(args.workspace_dirty_file, "r") as f:
+    #    is_dirty = f.read().strip() != "0"
 
     print("Generating {}".format(args.header))
     with open(args.header, "w") as f:

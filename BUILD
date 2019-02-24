@@ -7,14 +7,12 @@ py_binary(
 
 git_hash_cpp(
     name = "foo",
-    git_status_commit = ".git_status/commit_hash",
-    git_workspace_dirty = ".git_status/workspace_dirty",
     header = "b.h",
     cpp = "b.cpp"
 )
 
 cc_library(
-    name = "somelip",
+    name = "somelib",
     hdrs = [":b.h"],
     srcs = [":b.cpp"],
 )
@@ -24,5 +22,5 @@ cc_binary(
     srcs = [
         "main.cpp"
     ],
-    deps = [":somelip"]
+    deps = [":somelib"]
 )
