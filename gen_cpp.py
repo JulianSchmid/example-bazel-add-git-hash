@@ -34,6 +34,11 @@ class MultipleVariableStore:
                 return (result, l.is_reliable)
         return (None, False)
 
+def setup_path(file_path):
+    header_dir = os.path.normpath(os.path.join(file_path, ".."))
+    if not os.path.exists(header_dir):
+        os.makedirs(header_dir)
+
 def main():
 
     parser = argparse.ArgumentParser(description='Bake a git hash into a header & source.')
@@ -64,7 +69,7 @@ def main():
     (is_dirty_str, is_dirty_reliable) = variables.get(args.workspace_dirty_name.strip())
     is_dirty = "0" != is_dirty_str
 
-    print("Generating {}".format(args.header))
+    setup_path(args.header)
     with open(args.header, "w") as f:
         f.write("""
 #pragma once
@@ -77,7 +82,7 @@ struct VersionInfo {{
 }};
 """.format(hash_len=len(commit_hash)));
 
-    print("Generating {}".format(args.source))
+    setup_path(args.source)
     with open(args.source, "w") as f:
         hash_array = ""
         first = True

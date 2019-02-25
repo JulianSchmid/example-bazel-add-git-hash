@@ -1,5 +1,5 @@
 #include <iostream>
-#include "b.h"
+#include "a/c/b.h"
 
 #define ARRAY_SIZE(_NAME) (sizeof(_NAME)/sizeof(_NAME[0])) 
 
