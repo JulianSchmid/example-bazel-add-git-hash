@@ -1,9 +1,8 @@
-"""Execute a binary.
-The example below executes the binary target "//actions_run:merge" with
-some arguments. The binary will be automatically built by Bazel.
-The rule must declare its dependencies. To do that, we pass the target to
-the attribute "_merge_tool". Since it starts with an underscore, it is private
-and users cannot redefine it.
+"""
+Executes a python script that gets the volatile & stable workspace status
+files as an input.
+
+The result is a C++ header & source file containing the git hash & git dirty flag.
 """
 
 def _impl(ctx):
@@ -35,5 +34,4 @@ git_hash_cpp = rule(
         "header": attr.output(mandatory = True),
         "cpp": attr.output(mandatory = True)
     },
-    #output_to_genfiles = True,
 )
